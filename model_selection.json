@@ -1,0 +1,12 @@
+{
+  "model_name": "openai/gpt-oss-120b",
+  "token_pricing_per_1m": {
+    "input": 0.15,
+    "output": 0.60
+  },
+  "context_window_size": 128000,
+  "justification": {
+    "cost_compliance": "The combined input/output cost of $0.75 per 1 million tokens is below the mandatory assessment budget limit of $1.00 per 1 million tokens.",
+    "technical_suitability": "The 120B parameter model provides high-level reasoning capabilities essential for identifying complex vulnerabilities, and the 128k context window allows for full-file code analysis of the target PHP application."
+  }
+}

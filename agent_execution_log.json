@@ -1,0 +1,12 @@
+[
+    {
+        "timestamp": "2026-05-31T18:46:40.727771",
+        "task": "Theoretical vulnerability scan",
+        "model_used": "openai/gpt-oss-120b",
+        "input_tokens": 136,
+        "output_tokens": 2907,
+        "cost_usd": 0.0019481999999999998,
+        "tool_used": "None",
+        "outcome": "Success"
+    }
+]
