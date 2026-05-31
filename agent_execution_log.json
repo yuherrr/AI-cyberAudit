@@ -8,5 +8,47 @@
         "cost_usd": 0.0019481999999999998,
         "tool_used": "None",
         "outcome": "Success"
+    },
+    {
+        "timestamp": "2026-05-31T20:39:23.327949",
+        "task": "Theoretical vulnerability scan",
+        "model_used": "openai/gpt-oss-120b",
+        "input_tokens": 136,
+        "output_tokens": 2722,
+        "cost_usd": 0.0018371999999999998,
+        "tool_used": "None",
+        "outcome": "Success"
+    },
+    {
+        "timestamp": "2026-05-31T21:03:41.706993",
+        "task": "Theoretical vulnerability scan",
+        "model_used": "openai/gpt-oss-120b",
+        "input_tokens": 136,
+        "output_tokens": 2722,
+        "cost_usd": 0.0018371999999999998,
+        "tool_used": "None",
+        "outcome": "Success"
+    },
+    {
+        "timestamp": "2026-05-31T21:16:27.191324",
+        "task": "Theoretical vulnerability scan",
+        "tokens": {
+            "input": 111,
+            "output": 34
+        },
+        "cost_usd": 0.00018690000000000002,
+        "cumulative_cost": 0.00018690000000000002,
+        "outcome": "Success"
+    },
+    {
+        "timestamp": "2026-05-31T21:39:37.140523",
+        "task": "Theoretical vulnerability scan",
+        "tokens": {
+            "input": 111,
+            "output": 34
+        },
+        "cost_usd": 0.00018690000000000002,
+        "cumulative_cost": 0.00018690000000000002,
+        "outcome": "Success"
     }
 ]
