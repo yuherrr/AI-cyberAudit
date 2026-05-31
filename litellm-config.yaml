@@ -1,0 +1,71 @@
+model_list:
+
+  - model_name: gpt-4o
+    litellm_params:
+      model: gemini/gemini-3.1-flash-lite
+      api_key: "os.environ/GEMINI_API_KEY"
+      rpm: 10
+      tpm: 175000
+
+  # ============================================================
+  # EMBEDDING MODELS — Vector Search
+  # ============================================================
+  - model_name: text-embedding-gemini
+    litellm_params:
+      model: gemini/gemini-embedding-001
+      api_key: "os.environ/GEMINI_API_KEY"
+      rpm: 70
+  - model_name: text-embedding-gemini2
+    litellm_params:
+      model: gemini/gemini-embedding-2
+      api_key: "os.environ/GEMINI_API_KEY"
+      rpm: 70
+
+  # ============================================================
+  # AGENT DEDICATED LINE — OpenRouter Programming Specialized Line (Independent isolation, protect RPD)
+  # ============================================================
+  - model_name: agent-nemotron
+    litellm_params:
+      model: openrouter/nvidia/nemotron-3-super-120b-a12b:free
+      api_key: "os.environ/OPENROUTER_API_KEY"
+      # Release RPM limit to allow Cline instant high-frequency calls, after consuming 1000 RPD OpenRouter will intercept
+      rpm: 30 
+      
+  - model_name: agent-gpt
+    litellm_params:
+      model: openai/openai/gpt-oss-120b:free 
+      api_base: "https://openrouter.ai/api/v1"
+      api_key: "os.environ/OPENROUTER_API_KEY"
+      rpm: 30
+      input_cost_per_token: 0.00000015
+      output_cost_per_token: 0.00000060
+
+general_settings:
+  master_key: "os.environ/LITELLM_MASTER_KEY"
+  database_url: "os.environ/DATABASE_URL"
+  enable_responses_api: true
+  responses_api_return_structured: true 
+  set_verbose: false
+ 
+litellm_settings:
+  drop_params: true
+  cache: true
+  num_retries: 3
+  request_timeout: 120
+  timeout: 300
+  cache_params:
+    type: redis
+    host: "redis"
+    port: 6379
+    ttl: 3600
+ 
+router_settings:
+  routing_strategy: usage-based-routing
+  redis_host: "redis"
+  redis_port: 6379
+  allowed_fails: 2
+  cooldown_time: 60
+ 
+  model_group_alias:
+    "text-embedding-3-small": "text-embedding-gemini2"
+    "gpt-5-nano": "agent-gpt"
