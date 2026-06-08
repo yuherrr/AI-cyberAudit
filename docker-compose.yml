@@ -1,7 +1,6 @@
 version: '3.8'
 
 services:
-  # 1. Vulnerable Web Application (The target)
   vulnerable-app:
     image: vulnerables/web-dvwa
     container_name: vulnerable-target
@@ -10,7 +9,21 @@ services:
     networks:
       - ai-network
 
-  # 2. PostgreSQL
+  neo4j:
+    image: neo4j:5-community
+    container_name: neo4j
+    restart: unless-stopped
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    environment:
+      - NEO4J_AUTH=neo4j/password123
+    volumes:
+      - neo4j_data:/data
+      - neo4j_logs:/logs
+    networks:
+      - ai-network
+
   postgres:
     image: postgres:16-alpine
     container_name: litellm-db
@@ -24,12 +37,11 @@ services:
     networks:
       - ai-network
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U litellm -d litellmdb"]
+      test: ["CMD-SHELL", "pg_isready -U litellm -d litellm"]
       interval: 5s
       timeout: 5s
       retries: 5
-    
-  # 3. Redis
+
   redis:
     image: redis:latest
     container_name: redis
@@ -39,13 +51,7 @@ services:
       - redis_data:/data
     networks:
       - ai-network
-    healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
 
-  # 4. LiteLLM Gateway
   litellm:
     image: ghcr.io/berriai/litellm:main-latest
     container_name: litellm
@@ -55,14 +61,12 @@ services:
     environment:
       - LITELLM_MASTER_KEY=${LITELLM_MASTER_KEY}
       - DATABASE_URL=postgresql://litellm:litellm@postgres:5432/litellmdb
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
       - GROQ_API_KEY=${GROQ_API_KEY}
       - GEMINI_API_KEY=${GEMINI_API_KEY}
       - CEREBRAS_API_KEY=${CEREBRAS_API_KEY}
-      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
     volumes:
       - ./litellm-config.yaml:/app/config.yaml
-      - ./mem0_hook.py:/app/mem0_hook.py
-      - ./qdrant_db:/app/qdrant_db
     command: ["--config", "/app/config.yaml", "--port", "4000"]
     networks:
       - ai-network
@@ -70,12 +74,36 @@ services:
       postgres:
         condition: service_healthy
       redis:
-        condition: service_healthy
+        condition: service_started
+
+  ai-agent:
+    build: .
+    container_name: ai-agent
+    restart: "no"
+    environment:
+      - LITELLM_URL=http://litellm:4000
+      - LITELLM_MASTER_KEY=${LITELLM_MASTER_KEY}
+      - TARGET_URL=http://vulnerable-app
+      - NEO4J_URI=bolt://neo4j:7687
+      - NEO4J_USER=neo4j
+      - NEO4J_PASSWORD=password123
+      - BUDGET_LIMIT=0.50
+    volumes:
+      - ./:/app
+    working_dir: /app
+    command: ["python", "pentest_agent.py"]
+    networks:
+      - ai-network
+    depends_on:
+      - vulnerable-app
+      - litellm
+      - neo4j
 
 volumes:
   redis_data:
   pg_data:
-  qdrant_data:
+  neo4j_data:
+  neo4j_logs:
 
 networks:
   ai-network:
