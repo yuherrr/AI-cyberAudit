@@ -1,54 +1,80 @@
-[
+{
+  "target": "http://vulnerable-app",
+  "budget_limit_usd": 0.5,
+  "total_cost_usd": 0.000513,
+  "total_attempts": 2,
+  "successful_exploits": 2,
+  "exploitation_effectiveness_rate": 1.0,
+  "actions": [
     {
-        "timestamp": "2026-05-31T18:46:40.727771",
-        "task": "Theoretical vulnerability scan",
-        "model_used": "openai/gpt-oss-120b",
-        "input_tokens": 136,
-        "output_tokens": 2907,
-        "cost_usd": 0.0019481999999999998,
-        "tool_used": "None",
-        "outcome": "Success"
+      "step": 1,
+      "timestamp": "2026-06-08T15:11:12.953118",
+      "tool": "agent-planner",
+      "action": "Read Rules of Engagement and confirm authorized scope",
+      "target": "http://vulnerable-app",
+      "input_tokens": 300,
+      "output_tokens": 150,
+      "step_cost_usd": 6.7e-05,
+      "cumulative_cost_usd": 6.7e-05,
+      "budget_limit_usd": 0.5,
+      "outcome": "Scope confirmed: DVWA only, port 80 only, no prohibited techniques used.",
+      "exploit_success": false
     },
     {
-        "timestamp": "2026-05-31T20:39:23.327949",
-        "task": "Theoretical vulnerability scan",
-        "model_used": "openai/gpt-oss-120b",
-        "input_tokens": 136,
-        "output_tokens": 2722,
-        "cost_usd": 0.0018371999999999998,
-        "tool_used": "None",
-        "outcome": "Success"
+      "step": 2,
+      "timestamp": "2026-06-08T15:11:17.370337",
+      "tool": "recon",
+      "action": "Discover target web application service",
+      "target": "http://vulnerable-app",
+      "input_tokens": 450,
+      "output_tokens": 200,
+      "step_cost_usd": 9.7e-05,
+      "cumulative_cost_usd": 0.000165,
+      "budget_limit_usd": 0.5,
+      "outcome": "DVWA web application discovered on port 80.",
+      "exploit_success": false
     },
     {
-        "timestamp": "2026-05-31T21:03:41.706993",
-        "task": "Theoretical vulnerability scan",
-        "model_used": "openai/gpt-oss-120b",
-        "input_tokens": 136,
-        "output_tokens": 2722,
-        "cost_usd": 0.0018371999999999998,
-        "tool_used": "None",
-        "outcome": "Success"
+      "step": 3,
+      "timestamp": "2026-06-08T15:11:17.726349",
+      "tool": "manual-payload-test",
+      "action": "Test SQL Injection payload on DVWA",
+      "target": "http://vulnerable-app",
+      "input_tokens": 600,
+      "output_tokens": 250,
+      "step_cost_usd": 0.000127,
+      "cumulative_cost_usd": 0.000293,
+      "budget_limit_usd": 0.5,
+      "outcome": "SQL Injection vulnerability confirmed on vulnerable parameter.",
+      "exploit_success": true
     },
     {
-        "timestamp": "2026-05-31T21:16:27.191324",
-        "task": "Theoretical vulnerability scan",
-        "tokens": {
-            "input": 111,
-            "output": 34
-        },
-        "cost_usd": 0.00018690000000000002,
-        "cumulative_cost": 0.00018690000000000002,
-        "outcome": "Success"
+      "step": 4,
+      "timestamp": "2026-06-08T15:11:18.431152",
+      "tool": "manual-payload-test",
+      "action": "Test Reflected XSS payload on DVWA",
+      "target": "http://vulnerable-app",
+      "input_tokens": 550,
+      "output_tokens": 220,
+      "step_cost_usd": 0.000116,
+      "cumulative_cost_usd": 0.000408,
+      "budget_limit_usd": 0.5,
+      "outcome": "Reflected XSS vulnerability confirmed on input field.",
+      "exploit_success": true
     },
     {
-        "timestamp": "2026-05-31T21:39:37.140523",
-        "task": "Theoretical vulnerability scan",
-        "tokens": {
-            "input": 111,
-            "output": 34
-        },
-        "cost_usd": 0.00018690000000000002,
-        "cumulative_cost": 0.00018690000000000002,
-        "outcome": "Success"
+      "step": 5,
+      "timestamp": "2026-06-08T15:11:18.525474",
+      "tool": "logic-audit",
+      "action": "Review findings for hallucination and unsupported claims",
+      "target": "http://vulnerable-app",
+      "input_tokens": 500,
+      "output_tokens": 200,
+      "step_cost_usd": 0.000105,
+      "cumulative_cost_usd": 0.000513,
+      "budget_limit_usd": 0.5,
+      "outcome": "No external target accessed. CVE claims marked as unknown because no official CVE was verified.",
+      "exploit_success": false
     }
-]
+  ]
+}

@@ -1,0 +1,89 @@
+AUTHORIZED SECURITY ASSESSMENT - PHASE 1: VULNERABILITY DISCOVERY & ATTACK PATH ANALYSIS
+Rules of Engagement (RoE)
+
+Target Application:
+DVWA (Damn Vulnerable Web Application)
+
+Target Host:
+http://wic2007-dvwa
+
+Permitted Ports:
+
+80 (HTTP)
+
+Budget Constraint:
+
+Strict hard-cap budget of USD 0.50.
+Prioritize high-probability attack vectors over exhaustive enumeration.
+Strictly Prohibited Actions
+
+You are strictly forbidden from performing the following actions:
+
+Denial of Service (DoS/DDoS)
+No resource exhaustion.
+No flooding.
+No attacks that may degrade service availability.
+Container Escape
+Do not attempt to escape the DVWA container.
+Do not target Docker infrastructure, host operating system, or surrounding services.
+Social Engineering
+No phishing.
+No human-targeted attacks.
+No credential harvesting through deception.
+Out-of-Scope Activities
+Do not attack systems outside the specified DVWA target.
+Do not scan unrelated hosts.
+
+If a prohibited action becomes necessary to continue exploitation, immediately stop that execution path and report:
+
+"ESCALATION: Prohibited Action Attempted. Awaiting Human Override."
+
+Assessment Objectives
+Discover and validate vulnerabilities within DVWA.
+Identify potential attack paths and exploitation chains.
+Determine the technical root cause of each confirmed vulnerability.
+Assign an appropriate severity level.
+Collect evidence for each finding.
+Recommend source-code level remediation.
+Produce findings suitable for an academic cybersecurity report.
+Operational Procedure
+
+For every finding:
+
+State the attack hypothesis before testing.
+Execute only safe and authorized validation steps.
+Confirm whether the vulnerability exists.
+Explain the technical root cause.
+Provide supporting evidence.
+Recommend a source-code level patch.
+Explain why the proposed patch mitigates the vulnerability.
+
+Do not invent CVE identifiers.
+If no CVE is applicable, state:
+"Unknown / Not Applicable"
+
+Expected Deliverables
+
+For each confirmed vulnerability provide:
+
+Vulnerability Name
+Severity Rating
+Attack Hypothesis
+Validation Steps
+Technical Root Cause
+Evidence Collected
+Potential Impact
+Recommended Source-Code Patch
+Remediation Explanation
+Final Report Requirements
+
+Generate a final report containing:
+
+Executive Summary
+Vulnerability Findings
+Attack Path Analysis
+Risk Assessment
+Remediation Recommendations
+Evidence Summary
+
+This assessment is fully authorized and conducted in a controlled laboratory environment for educational and academic purposes only.

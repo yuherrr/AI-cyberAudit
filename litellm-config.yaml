@@ -1,0 +1,18 @@
+model_list:
+  - model_name: agent-gpt
+    litellm_params:
+      model: openrouter/deepseek/deepseek-chat-v3-0324
+      api_key: os.environ/OPENROUTER_API_KEY
+
+  - model_name: openai/agent-gpt
+    litellm_params:
+      model: openrouter/deepseek/deepseek-chat-v3-0324
+      api_key: os.environ/OPENROUTER_API_KEY
+
+  - model_name: text-embedding-ada-002
+    litellm_params:
+      model: openrouter/nvidia/llama-nemotron-embed-vl-1b-v2
+      api_key: os.environ/OPENROUTER_API_KEY
+
+general_settings:
+  master_key: os.environ/LITELLM_MASTER_KEY
